@@ -6,7 +6,7 @@
 /*   By: khestia <khestia@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/10 19:59:29 by khestia           #+#    #+#             */
-/*   Updated: 2022/04/10 20:01:03 by khestia          ###   ########.fr       */
+/*   Updated: 2022/04/11 13:56:32 by khestia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	ft_init_struct_two(t_all s, char *file)
 {
 	t_map	map;
 	t_tex	tex;
-	t_spr	*spr;
+	//t_spr	*spr;
 	t_stk	*stk;
 
 	map.tab = NULL;
@@ -52,16 +52,16 @@ void	ft_init_struct_two(t_all s, char *file)
 	tex.e = NULL;
 	tex.w = NULL;
 	tex.i = NULL;
-	spr = NULL;
+	//spr = NULL;
 	stk = NULL;
 	map.x = 0;
 	map.y = 0;
-	map.spr = 0;
+	//map.spr = 0;
 	tex.c = NULL;
 	tex.f = NULL;
 	s.map = map;
 	s.tex = tex;
-	s.spr = spr;
+	//s.spr = spr;
 	s.stk = stk;
 	ft_init_struct_three(s, file);
 }

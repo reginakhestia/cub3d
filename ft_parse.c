@@ -6,7 +6,7 @@
 /*   By: khestia <khestia@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/10 20:01:24 by khestia           #+#    #+#             */
-/*   Updated: 2022/04/10 20:05:46 by khestia          ###   ########.fr       */
+/*   Updated: 2022/04/11 14:12:37 by khestia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,11 @@
 int		ft_map_line_len(t_all *s, char *line)
 {
 	int	i;
-	int	count;
 
 	i = 0;
-	count = 0;
 	while (line[i] != '\0')
-	{
-		if (line[i] == '0' || line[i] == '1' || line[i] == 'N' ||
-			line[i] == 'S' || line[i] == 'W' || line[i] == 'E')
-			count++;
 		i++;
-	}
-	if (s->map.x != 0 && s->map.x != count)
-		return (-1);
-	return (count);
+	return (i);
 }
 
 char	*ft_map_line(t_all *s, char *line, int *i)
@@ -42,9 +33,9 @@ char	*ft_map_line(t_all *s, char *line, int *i)
 	while (line[*i] != '\0')
 	{
 		if (line[*i] == '0' || line[*i] == '1' || line[*i] == 'N'
-			|| line[*i] == 'E' || line[*i] == 'S' || line[*i] == 'W')
+			|| line[*i] == 'E' || line[*i] == 'S' || line[*i] == 'W' || line[*i] == ' ')
 			map_line[j++] = line[*i];
-		else if (line[*i] != ' ')
+		else
 		{
 			free(map_line);
 			return (NULL);
@@ -76,8 +67,6 @@ int		ft_map(t_all *s, char *line, int *i)
 		free(s->map.tab);
 	s->map.tab = tmp;
 	s->map.y++;
-	if ((s->map.x = ft_map_line_len(s, line)) == -1)
-		return (-13);
 	return (0);
 }
 
@@ -88,7 +77,10 @@ int		ft_parse_line(t_all *s, char *line)
 	i = 0;
 	ft_skip_space(line, &i);
 	if ((line[i] == '1' || s->err.m == 1) && line[i] != '\0')
+	{
+		i = 0;
 		s->err.n = ft_map(s, line, &i);
+	}
 	else if (line[i] == 'N' && line[i + 1] == 'O' && line[i + 2] == ' ')
 		s->err.n = ft_texture(s, &s->tex.n, line, &i);
 	else if (line[i] == 'S' && line[i + 1] == 'O' && line[i + 2] == ' ')
