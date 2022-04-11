@@ -6,7 +6,7 @@
 /*   By: khestia <khestia@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/10 20:03:06 by khestia           #+#    #+#             */
-/*   Updated: 2022/04/10 20:06:15 by khestia          ###   ########.fr       */
+/*   Updated: 2022/04/11 14:18:04 by khestia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int		ft_put_adr(t_all *s, unsigned int **adr, char *file)
 		return (-1);
 	close(fd);
 	img = mlx_xpm_file_to_image(s->mlx.ptr, file, &tab[0], &tab[1]);
-	if (img == NULL || tab[0] != 64 || tab[1] != 64)
+	if (img == NULL /*|| tab[0] != 64 || tab[1] != 64*/)
 		return (-1);
 	*adr = (unsigned int *)mlx_get_data_addr(img, &tab[2], &tab[3], &tab[4]);
 	free(img);

@@ -6,7 +6,7 @@
 /*   By: khestia <khestia@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/10 20:06:52 by khestia           #+#    #+#             */
-/*   Updated: 2022/04/10 20:08:00 by khestia          ###   ########.fr       */
+/*   Updated: 2022/04/11 15:13:04 by khestia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,6 @@ int		ft_error(int i)
 		write(2, "Error : Invalid map\n", 20);
 	if (i == -13)
 		write(2, "Error : Map isn't a rectangle\n", 30);
-	if (i == -14)
-		write(2, "Error : No resolution specified\n", 32);
 	if (i == -15)
 		write(2, "Error : Missing texture\n", 24);
 	if (i == -16)
@@ -61,19 +59,23 @@ int		ft_map_chek(t_all *s)
 	int	j;
 
 	i = 0;
+	j = 0;
 	while (i < s->map.y)
 	{
 		j = 0;
-		while (j < s->map.x)
+		while (s->map.tab[i][j] != '\0')
 		{
-			if (s->map.tab[i][j] != '1' && i == 0)
-				return (-1);
-			else if (s->map.tab[i][j] != '1' && i == s->map.y - 1)
-				return (-1);
-			else if (s->map.tab[i][j] != '1' && j == 0)
-				return (-1);
-			else if (s->map.tab[i][j] != '1' && j == s->map.x - 1)
-				return (-1);
+			if (s->map.tab[i][j] == '0')
+			{
+				if (i == 0 || j == 0)
+					return (-1);
+				else if (s->map.tab[i + 1][j] == ' ' || s->map.tab[i][j + 1] == ' '
+					|| s->map.tab[i + 1][j + 1] == ' ')
+					return (-1);
+				else if (s->map.tab[i - 1][j] == ' ' || s->map.tab[i][j - 1] == ' '
+					|| s->map.tab[i - 1][j - 1] == ' ')
+					return (-1);
+			}
 			j++;
 		}
 		i++;
@@ -83,9 +85,7 @@ int		ft_map_chek(t_all *s)
 
 int		ft_parse_check(t_all *s)
 {
-	if (s->win.x <= 0 || s->win.y <= 0)
-		return (ft_error(-14));
-	else if ((s->tex.n == NULL || s->tex.s == NULL || s->tex.e == NULL)
+	if ((s->tex.n == NULL || s->tex.s == NULL || s->tex.e == NULL)
 			|| (s->tex.w == NULL || s->tex.i == NULL))
 		return (ft_error(-15));
 	else if (s->tex.c == NULL || s->tex.f == NULL)
@@ -95,7 +95,7 @@ int		ft_parse_check(t_all *s)
 	else if (s->err.p > 1)
 		return (ft_error(-18));
 	else if (ft_map_check(s) == -1)
-		return (ft_strerror(-19));
+		return (ft_error(-19));
 	return (1);
 }
 
